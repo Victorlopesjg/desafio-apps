@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip">
+
+    <LinearLayout
+        android:id="@+id/llImagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+
+        <ImageView
+            android:id="@+id/imgNoticia"
+            android:layout_width="81dp"
+            android:layout_height="50dp"
+            android:src="@drawable/teste" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtEditoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/llImagem"
+        android:layout_toRightOf="@+id/llImagem"
+        android:text="Brasil"
+        android:textColor="#a0b3be"
+        android:textSize="10dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!-- Artist Name -->
+    <TextView
+        android:id="@+id/txtTituloNoticia"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtEditoria"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/llImagem"
+        android:text="CCJ do Senado aprova união estável e casamento entre pessoas do mesmo sexo"
+        android:textColor="#20354d"
+        android:textSize="15dip"
+        android:textStyle="bold" />
+
+</RelativeLayout>

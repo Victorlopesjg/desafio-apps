@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DesafioInfoGlobo</string>
+    <string name="url_base">https://raw.githubusercontent.com/Infoglobo/desafio-apps/master/</string>
+</resources>
