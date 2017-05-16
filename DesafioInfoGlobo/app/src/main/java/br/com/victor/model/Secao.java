@@ -2,7 +2,9 @@
 package br.com.victor.model;
 
 
-public class Secao {
+import java.io.Serializable;
+
+public class Secao implements Serializable {
 
     private String nome;
     private String url;

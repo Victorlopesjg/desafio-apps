@@ -19,7 +19,7 @@ public class Conteudo implements Serializable {
     private String titulo;
     private String url;
     private String urlOriginal;
-    private List<Imagen> imagens;
+    private List<Imagem> imagens;
 
     public List<String> getAutores() {
         return autores;
@@ -125,11 +125,11 @@ public class Conteudo implements Serializable {
         this.urlOriginal = urlOriginal;
     }
 
-    public List<Imagen> getImagens() {
+    public List<Imagem> getImagens() {
         return imagens;
     }
 
-    public void setImagens(List<Imagen> imagens) {
+    public void setImagens(List<Imagem> imagens) {
         this.imagens = imagens;
     }
 

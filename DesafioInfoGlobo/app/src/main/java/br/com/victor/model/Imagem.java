@@ -1,8 +1,9 @@
 
 package br.com.victor.model;
 
+import java.io.Serializable;
 
-public class Imagen {
+public class Imagem implements Serializable {
 
     private String autor;
     private String fonte;

@@ -1,12 +1,14 @@
 
 package br.com.victor.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.com.victor.annotation.Path;
 
+@SuppressWarnings("serial")
 @Path("capa.json")
-public class Capa {
+public class Capa implements Serializable {
 
     private List<Conteudo> conteudos = null;
     private String produto;

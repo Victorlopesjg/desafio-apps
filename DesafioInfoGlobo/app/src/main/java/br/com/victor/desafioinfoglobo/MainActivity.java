@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
                                 Conteudo conteudo = (Conteudo) listNoticias.getItemAtPosition(position);
 
                                 Intent intent = new Intent(MainActivity.this, NoticiaDetalhadaActivity.class);
-//                                Bundle bundle = new Bundle();
-//                                bundle.putSerializable(getString(R.string.key_intent_noticia), conteudo);
-//                                intent.putExtras(bundle);
+                                Bundle bundle = new Bundle();
+                                intent.putExtra(getString(R.string.key_intent_noticia), conteudo);
+                                intent.putExtras(bundle);
                                 startActivity(intent);
                             }
                         });
