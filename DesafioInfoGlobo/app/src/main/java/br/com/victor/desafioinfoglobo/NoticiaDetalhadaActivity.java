@@ -2,14 +2,16 @@ package br.com.victor.desafioinfoglobo;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,9 +31,6 @@ import br.com.victor.model.Imagem;
 import br.com.victor.utils.CalendarUtils;
 import br.com.victor.utils.ImageUtils;
 
-import static br.com.victor.utils.CalendarUtils.formatLongToString;
-import static br.com.victor.utils.CalendarUtils.formatStringToDate;
-
 public class NoticiaDetalhadaActivity extends AppCompatActivity {
 
     private ImageLoader mImageLoader;
@@ -43,6 +42,8 @@ public class NoticiaDetalhadaActivity extends AppCompatActivity {
     private ImageView imgNoticia;
     private TextView txtLegandaImagem;
     private TextView txtNoticia;
+    private LinearLayout llErro;
+    private Button btAcao;
     private Conteudo conteudo;
 
     @Override
@@ -70,6 +71,8 @@ public class NoticiaDetalhadaActivity extends AppCompatActivity {
         imgNoticia = (ImageView) findViewById(R.id.imgNoticia);
         txtLegandaImagem = (TextView) findViewById(R.id.txtLegandaImagem);
         txtNoticia = (TextView) findViewById(R.id.txtNoticia);
+        llErro = (LinearLayout) findViewById(R.id.layout_generico_info);
+        btAcao = (Button) findViewById(R.id.btAcao);
 
         DisplayImageOptions mDisplayImageOptions = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(ImageUtils.getImage(R.drawable.sem_imagem, getApplicationContext()))
@@ -92,30 +95,32 @@ public class NoticiaDetalhadaActivity extends AppCompatActivity {
     }
 
     private void init(Conteudo conteudo) {
-        if (conteudo.getTitulo() != null) {
-            txtTitulo.setText(conteudo.getTitulo());
-        }
-
-        if (conteudo.getSubTitulo() != null) {
-            txtSubTitulo.setText(conteudo.getSubTitulo());
-        } else {
-            txtSubTitulo.setVisibility(View.GONE);
-        }
-
         if (conteudo.getTexto() != null) {
+
+            if (conteudo.getTitulo() != null) {
+                txtTitulo.setText(conteudo.getTitulo());
+            }
+
+            if (conteudo.getSubTitulo() != null) {
+                txtSubTitulo.setText(conteudo.getSubTitulo());
+            } else {
+                txtSubTitulo.setVisibility(View.GONE);
+            }
+
             txtNoticia.setText(conteudo.getTexto());
+
+            // Exibindo os autores da noticia
+            setAutores(conteudo.getAutores());
+
+            // Exibindo a data da publicação
+            setDataNoticia(conteudo.getPublicadoEm());
+
+            // Exibindo a imagem da noticia
+            setImagemNoticia(conteudo.getImagens());
         } else {
-            txtNoticia.setVisibility(View.GONE);
+            llErro.setVisibility(View.VISIBLE);
+            btAcao.setOnClickListener(btOpenNavegadorListener);
         }
-
-        // Exibindo os autores da noticia
-        setAutores(conteudo.getAutores());
-
-        // Exibindo a data da publicação
-        setDataNoticia(conteudo.getPublicadoEm());
-
-        // Exibindo a imagem da noticia
-        setImagemNoticia(conteudo.getImagens());
     }
 
     private void setImagemNoticia(List<Imagem> imagens) {
@@ -155,8 +160,8 @@ public class NoticiaDetalhadaActivity extends AppCompatActivity {
 
     private void setDataNoticia(String data) {
         if (data != null && !data.isEmpty()) {
-            Date date = formatStringToDate("2017-03-08T14:39:44-0300", "yyyy-MM-dd'T'HH:mm:ss-SSSS", Locale.ENGLISH);
-            String dataNoticia = formatLongToString(date.getTime(), "dd/MM/YY HH:mm");
+            Date date = CalendarUtils.formatStringToDate(data, "yyyy-MM-dd'T'HH:mm:ss-SSSS", Locale.ENGLISH);
+            String dataNoticia = CalendarUtils.formatLongToString(date.getTime(), "dd/MM/YY HH:mm");
             txtData.setText(dataNoticia);
         } else {
             txtData.setVisibility(View.GONE);
@@ -165,23 +170,37 @@ public class NoticiaDetalhadaActivity extends AppCompatActivity {
 
     private void setAutores(List<String> autores) {
         if (autores != null && !autores.isEmpty()) {
-            String auts = "";
-            for (String s : autores) {
-                auts += s + ", ";
+            String auts = autores.get(0);
+
+            for (int i = 1; i < autores.size(); i++) {
+                auts += ", " + autores.get(i);
             }
+
             txtAutor.setText("POR: " + auts);
         } else {
             txtAutor.setVisibility(View.GONE);
         }
     }
 
+    // Metodo para compartilhar a noticia nas redes sociais
     public void compartilharNoticia() {
         Intent i = new Intent(android.content.Intent.ACTION_SEND);
         i.setType("text/plain");
-        i.putExtra(android.content.Intent.EXTRA_TEXT, conteudo.getTitulo() +"\n\n" +
+        i.putExtra(android.content.Intent.EXTRA_TEXT, conteudo.getTitulo() + "\n\n" +
                 conteudo.getUrl() + "\n\nVia O GLOBO");
-        startActivity(Intent.createChooser(i,"Compartilhar com"));
+        startActivity(Intent.createChooser(i, "Compartilhar com"));
     }
+
+    // Evento para o botão de abrir o navegador com a URL da noticia
+    private View.OnClickListener btOpenNavegadorListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String url = conteudo.getUrl();
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -194,6 +213,15 @@ public class NoticiaDetalhadaActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_noticia, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem compartilhar = menu.findItem(R.id.menu_noticia_compartilhar);
+        if (conteudo.getTexto() == null || conteudo.getTexto().isEmpty()) {
+            compartilhar.setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

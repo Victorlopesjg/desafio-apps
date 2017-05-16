@@ -4,4 +4,5 @@
 
     <string name="key_intent_noticia">key_intent_noticia</string>
     <string name="menu_compartilhar">Compartilhar</string>
+    <string name="text_erro">Ops!! A matéria está incompleta. Clique no botão abaixo e abra no seu navegador</string>
 </resources>

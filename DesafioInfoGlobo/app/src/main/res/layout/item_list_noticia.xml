@@ -15,8 +15,7 @@
         <ImageView
             android:id="@+id/imgNoticia"
             android:layout_width="121dp"
-            android:layout_height="81dp"
-            android:src="@drawable/teste" />
+            android:layout_height="81dp" />
     </LinearLayout>
 
     <TextView

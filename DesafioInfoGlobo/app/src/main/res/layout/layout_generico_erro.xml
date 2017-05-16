@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_generico_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:weightSum="1">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_emotion_erro" />
+
+    <TextView
+        android:id="@+id/txtMensagemErro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:gravity="center"
+        android:text="@string/text_erro"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btAcao"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="126dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:stateListAnimator="@null"
+        android:text="Abrir" />
+
+</LinearLayout>
