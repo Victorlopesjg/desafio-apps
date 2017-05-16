@@ -1,9 +1,10 @@
 
 package br.com.victor.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Conteudo {
+public class Conteudo implements Serializable {
 
     private Integer id;
     private List<String> autores;

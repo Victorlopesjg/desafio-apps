@@ -20,7 +20,7 @@ import java.util.List;
 
 import br.com.victor.annotation.Path;
 import br.com.victor.desafioinfoglobo.R;
-import br.com.victor.interfaces.PersistBD;
+import br.com.victor.model.Capa;
 
 /**
  * @author Victor Oliveira
@@ -31,9 +31,9 @@ public class WebService {
     private ObjectMapper objectMapper = null;
     private String url;
 
-    public ArrayList<PersistBD> toList(Class<?> classEntity, Context context) throws Exception {
+    public ArrayList<Capa> toList(Class<?> classEntity, Context context) throws Exception {
         ResponseEntity<String> responseEntity = null;
-        ArrayList<PersistBD> list = null;
+        ArrayList<Capa> list = null;
         try {
             url = context.getString(R.string.url_base);
             url += montarPath(classEntity);
@@ -55,7 +55,7 @@ public class WebService {
                             JavaType type = getObjectMapperInstance().getTypeFactory().constructCollectionType(List.class, classEntity);
                             list = getObjectMapperInstance().readValue(result, type);
                         } else {
-                            list.add((PersistBD) getObjectMapperInstance().readValue(result, classEntity));
+                            list.add((Capa) getObjectMapperInstance().readValue(result, classEntity));
                         }
                     }
                 } else {
